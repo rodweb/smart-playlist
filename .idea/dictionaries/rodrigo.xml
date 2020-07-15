@@ -3,6 +3,7 @@
     <words>
       <w>dotenv</w>
       <w>lastfm</w>
+      <w>postgresql</w>
       <w>scrobble</w>
     </words>
   </dictionary>

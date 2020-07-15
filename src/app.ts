@@ -1,16 +1,12 @@
-import dotenv from 'dotenv';
 import { LastfmClient } from './LastfmClient';
-dotenv.config();
-
-const env = {
-  lastfm: {
-    key: process.env['LASTFM_API_KEY'] || '',
-  },
-};
+import * as process from 'process';
+import { MikroORM } from 'mikro-orm';
+import ormConfig from '../mikro-orm.config';
 
 (async () => {
-  const last = new LastfmClient(env.lastfm.key);
-  await last.getRecentTracks();
+  // const last = new LastfmClient(env.lastfm.key);
+  // await last.getRecentTracks();
+  const orm = await MikroORM.init(ormConfig);
 })()
   .then(() => {
     console.log('done');

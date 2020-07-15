@@ -5,6 +5,13 @@
   "repository": "git@github.com:rodweb/smart-playlist.git",
   "author": "Rodrigo Campos <rod.apd@gmail.com>",
   "license": "MIT",
+  "mikro-orm": {
+    "useTsNode": true,
+    "configPaths": [
+      "./src/mikro-orm.config.ts",
+      "./dist/mikro-orm.config.js"
+    ]
+  },
   "dependencies": {
     "axios": "^0.19.2",
     "dotenv": "^8.2.0",
