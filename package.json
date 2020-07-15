@@ -1,0 +1,20 @@
+{
+  "name": "smart-playlist",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:rodweb/smart-playlist.git",
+  "author": "Rodrigo Campos <rod.apd@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "dotenv": "^8.2.0",
+    "mikro-orm": "^3.6.15",
+    "pg": "^8.3.0",
+    "ts-node": "^8.10.2",
+    "typescript": "^3.9.6"
+  },
+  "devDependencies": {
+    "@types/node": "^14.0.23",
+    "prettier": "2.0.5"
+  }
+}
