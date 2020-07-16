@@ -15,6 +15,6 @@ export const schema = new EntitySchema<Track, BaseEntity>({
     artist: { type: 'string' },
     name: { type: 'string' },
     album: { type: 'string' },
-    listenedAt: { type: 'Date' }
+    listenedAt: { type: 'Date' },
   },
 });
