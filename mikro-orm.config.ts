@@ -2,7 +2,7 @@ import env from './src/environment';
 import { Options } from 'mikro-orm';
 
 const config: Options = {
-  entities: [],
+  entitiesDirs: ['./src/entities/**'],
   type: 'postgresql',
   clientUrl: env.db.conn,
   migrations: {
