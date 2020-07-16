@@ -3,6 +3,8 @@
     <words>
       <w>dotenv</w>
       <w>lastfm</w>
+      <w>mbid</w>
+      <w>nowplaying</w>
       <w>postgresql</w>
       <w>scrobble</w>
     </words>

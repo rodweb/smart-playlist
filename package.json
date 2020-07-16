@@ -12,6 +12,10 @@
       "./dist/mikro-orm.config.js"
     ]
   },
+  "scripts": {
+    "start": "ts-node ./src/app.ts",
+    "migrate": "mikro-orm migration:up"
+  },
   "dependencies": {
     "axios": "^0.19.2",
     "dotenv": "^8.2.0",
