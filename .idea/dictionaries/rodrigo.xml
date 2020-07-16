@@ -6,7 +6,9 @@
       <w>mbid</w>
       <w>nowplaying</w>
       <w>postgresql</w>
+      <w>recenttracks</w>
       <w>scrobble</w>
+      <w>scrobbler</w>
     </words>
   </dictionary>
 </component>
