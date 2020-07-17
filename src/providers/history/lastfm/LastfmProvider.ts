@@ -4,7 +4,9 @@ import { LastfmClient } from './LastfmClient';
 import { ListenedTrack } from '../../../ListenedTrack';
 import { RecentTrackResponse } from './responses/RecentTrackResponse';
 
-type Args = { apiKey: string };
+interface Args {
+  apiKey: string;
+}
 
 export class LastfmProvider implements HistoryProvider {
   private mapper = new LastfmMapper();

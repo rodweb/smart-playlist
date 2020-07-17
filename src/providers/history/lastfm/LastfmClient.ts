@@ -9,7 +9,7 @@ const defaultPagination = { page: 1, limit: 200 };
 
 export class LastfmClient {
   private http: AxiosInstance;
-  constructor(private key: string) {
+  constructor(private apiKey: string) {
     this.http = axios.create({
       baseURL,
     });
@@ -21,7 +21,7 @@ export class LastfmClient {
   ): Promise<T> {
     const qs = querystring.stringify({
       format: 'json',
-      api_key: this.key,
+      api_key: this.apiKey,
       page: options.pagination.page,
       limit: options.pagination.limit,
       user,
