@@ -1,6 +1,6 @@
-import { UserProfile } from './UserProfile';
-import { PlaylistDetail } from './PlaylistDetail';
-import { Playlist } from './Playlist';
+import { UserProfile } from './domain/UserProfile';
+import { PlaylistDetail } from './domain/PlaylistDetail';
+import { Playlist } from './domain/Playlist';
 
 export interface PlaylistProvider {
   getProfile(): Promise<UserProfile>;

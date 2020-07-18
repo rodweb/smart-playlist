@@ -1,7 +1,7 @@
 import { HistoryProvider, Options } from '../../../HistoryProvider';
 import { LastfmMapper } from './LastfmMapper';
 import { LastfmClient } from './LastfmClient';
-import { ListenedTrack } from '../../../ListenedTrack';
+import { ListenedTrack } from '../../../domain/ListenedTrack';
 import { RecentTrackResponse } from './responses/RecentTrackResponse';
 
 interface Args {

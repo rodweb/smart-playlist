@@ -1,4 +1,4 @@
-import { ListenedTrack } from './ListenedTrack';
+import { ListenedTrack } from './domain/ListenedTrack';
 
 interface Pagination {
   page: number;

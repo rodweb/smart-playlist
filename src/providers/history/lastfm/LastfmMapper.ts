@@ -1,4 +1,4 @@
-import { ListenedTrack } from '../../../ListenedTrack';
+import { ListenedTrack } from '../../../domain/ListenedTrack';
 import { RecentTrackResponse } from './responses/RecentTrackResponse';
 
 export class LastfmMapper {

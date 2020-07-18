@@ -6,8 +6,8 @@ import ClientOAuth2 from 'client-oauth2';
 import ormConfig from '../mikro-orm.config';
 import env from './environment';
 import { HistoryProviderFactory } from './HistoryProviderFactory';
-import { Track } from './entities/Track';
-import { Login } from './entities/Login';
+import { Track } from './infrastructure/entities/Track';
+import { Login } from './infrastructure/entities/Login';
 import { PlaylistProviderFactory } from './PlaylistProviderFactory';
 
 let orm: MikroORM;

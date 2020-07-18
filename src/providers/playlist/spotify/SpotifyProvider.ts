@@ -1,10 +1,10 @@
 import axios, { AxiosInstance } from 'axios';
 import { PlaylistProvider } from '../../../PlaylistProvider';
-import { UserProfile } from '../../../UserProfile';
+import { UserProfile } from '../../../domain/UserProfile';
 import { SpotifyMapper } from './SpotifyMapper';
 import { MeObject } from './responses/MeObject';
-import { PlaylistDetail } from '../../../PlaylistDetail';
-import { Playlist } from '../../../Playlist';
+import { PlaylistDetail } from '../../../domain/PlaylistDetail';
+import { Playlist } from '../../../domain/Playlist';
 import { PlaylistFullObject } from './responses/PlaylistFullObject';
 import { PlaylistObject } from './responses/PlaylistObject';
 import { PagingObject } from './responses/PagingObject';

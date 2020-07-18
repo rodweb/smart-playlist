@@ -1,5 +1,5 @@
 import { PlaylistProvider } from './PlaylistProvider';
-import { SpotifyProvider } from './providers/paylist/spotify/SpotifyProvider';
+import { SpotifyProvider } from './providers/playlist/spotify/SpotifyProvider';
 import { EnvironmentVariables } from './environment';
 
 interface Args {

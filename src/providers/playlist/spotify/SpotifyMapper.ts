@@ -1,9 +1,9 @@
-import { UserProfile } from '../../../UserProfile';
+import { UserProfile } from '../../../domain/UserProfile';
 import { MeObject } from './responses/MeObject';
-import { Playlist } from '../../../Playlist';
+import { Playlist } from '../../../domain/Playlist';
 import { PlaylistTrackObject } from './responses/PlaylistTrackObject';
 import { TrackObject } from './responses/TrackObject';
-import { PlaylistTrack } from '../../../PlaylistTrack';
+import { PlaylistTrack } from '../../../domain/PlaylistTrack';
 import { PlaylistObject } from './responses/PlaylistObject';
 
 export class SpotifyMapper {
