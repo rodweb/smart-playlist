@@ -2,6 +2,4 @@ tunnels:
   dev:
     proto: http
     addr: 3000
-    console_ui: false
-    console_ui_color: transparent
 
