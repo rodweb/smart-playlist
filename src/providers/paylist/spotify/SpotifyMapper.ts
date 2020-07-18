@@ -1,8 +1,8 @@
 import { UserProfile } from '../../../UserProfile';
-import { MeResponse } from './responses/MeResponse';
+import { MeObject } from './responses/MeObject';
 
 export class SpotifyMapper {
-  toUserProfile(response: MeResponse): UserProfile {
+  toUserProfile(response: MeObject): UserProfile {
     return {
       id: response.id,
       name: response.display_name || response.id,

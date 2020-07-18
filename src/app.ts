@@ -19,7 +19,13 @@ const spotifyOAuth = new ClientOAuth2({
   accessTokenUri: env.spotify.accessTokenUri,
   authorizationUri: env.spotify.authorizationUri,
   redirectUri: env.spotify.redirectUri,
-  scopes: ['user-read-private', 'user-read-email', 'user-read-recently-played'],
+  scopes: [
+    'user-read-private',
+    'user-read-email',
+    'user-read-recently-played',
+    'playlist-modify-public',
+    'playlist-modify-private',
+  ],
   // state: 'state',
 });
 

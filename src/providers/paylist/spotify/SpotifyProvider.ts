@@ -2,7 +2,8 @@ import axios, { AxiosInstance } from 'axios';
 import { PlaylistProvider } from '../../../PlaylistProvider';
 import { UserProfile } from '../../../UserProfile';
 import { SpotifyMapper } from './SpotifyMapper';
-import { MeResponse } from './responses/MeResponse';
+import { MeObject } from './responses/MeObject';
+import { PlaylistDetail } from '../../../PlaylistDetail';
 
 interface Args {
   apiUrl: string;
@@ -22,7 +23,11 @@ export class SpotifyProvider implements PlaylistProvider {
   }
 
   async getProfile(): Promise<UserProfile> {
-    const { data } = await this.http.get<MeResponse>('me');
+    const { data } = await this.http.get<MeObject>('me');
     return this.mapper.toUserProfile(data);
+  }
+
+  async updateDetails(details: Partial<PlaylistDetail>): Promise<void> {
+    return Promise.resolve();
   }
 }
