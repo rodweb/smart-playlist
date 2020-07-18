@@ -1,8 +1,6 @@
 import { ExternalUrlsObject } from './ExternalUrlsObject';
-
-interface AlbumObject {}
-
-interface ArtistObject {}
+import { ArtistObject } from './ArtistObject';
+import { AlbumObject } from './AlbumObject';
 
 interface TrackLinkObject {}
 
@@ -25,7 +23,7 @@ export interface TrackObject {
   popularity: number;
   preview_url: string | null;
   track_number: number;
-  type: string;
+  type: 'track';
   uri: string;
   is_local: boolean;
 }

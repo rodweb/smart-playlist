@@ -1,6 +1,6 @@
 export interface PagingObject<T> {
   href: string;
-  items: T[];
+  items?: T[];
   limit: number;
   next: string | null;
   offset: number;

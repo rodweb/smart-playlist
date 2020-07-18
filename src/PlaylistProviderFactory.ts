@@ -9,11 +9,10 @@ interface Args {
 }
 
 export class PlaylistProviderFactory {
-  static create({ env, accessToken, refreshToken }: Args): PlaylistProvider {
-    if (accessToken && refreshToken) {
+  static create({ env, accessToken }: Args): PlaylistProvider {
+    if (accessToken) {
       return new SpotifyProvider({
         accessToken,
-        refreshToken,
         apiUrl: env.spotify.apiUrl,
       });
     }

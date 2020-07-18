@@ -4,11 +4,14 @@ import { UserProfile } from '../../../UserProfile';
 import { SpotifyMapper } from './SpotifyMapper';
 import { MeObject } from './responses/MeObject';
 import { PlaylistDetail } from '../../../PlaylistDetail';
+import { Playlist } from '../../../Playlist';
+import { PlaylistFullObject } from './responses/PlaylistFullObject';
+import { PlaylistObject } from './responses/PlaylistObject';
+import { PagingObject } from './responses/PagingObject';
 
 interface Args {
   apiUrl: string;
   accessToken: string;
-  refreshToken: string;
 }
 
 export class SpotifyProvider implements PlaylistProvider {
@@ -29,5 +32,16 @@ export class SpotifyProvider implements PlaylistProvider {
 
   async updateDetails(details: Partial<PlaylistDetail>): Promise<void> {
     return Promise.resolve();
+  }
+
+  async create(detail: PlaylistDetail): Promise<void> {
+    return Promise.resolve(undefined);
+  }
+
+  async getPlaylists(): Promise<Playlist[]> {
+    const { data } = await this.http.get<PagingObject<PlaylistObject>>(
+      'me/playlists'
+    );
+    return data.items.map((item) => this.mapper.toPlaylist(item));
   }
 }
