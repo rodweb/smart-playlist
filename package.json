@@ -14,7 +14,7 @@
   },
   "scripts": {
     "start": "ts-node-dev --notify=false --respawn --transpile-only ./src/app.ts",
-    "teste": "jest",
+    "test": "jest",
     "migrate": "mikro-orm migration:up"
   },
   "dependencies": {
