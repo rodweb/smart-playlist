@@ -67,6 +67,8 @@ describe('LastPlayedRule', () => {
   });
 });
 
+// last played in the last x [days, weeks, months, years]
+
 // album
 // artist
 // plays
@@ -74,4 +76,19 @@ describe('LastPlayedRule', () => {
 // first played
 // last played
 // liked
-// classification
+// classification?
+// bmp?
+// genre
+// album rating
+// release year
+
+// select by
+// most/least recently played
+// most/least often played
+// most/least recently played for the first time
+// random?
+// artist
+// album
+// name
+// genre?
+// rating?

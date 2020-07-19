@@ -8,6 +8,7 @@ import { Playlist } from '../../../domain/Playlist';
 import { PlaylistFullObject } from './responses/PlaylistFullObject';
 import { PlaylistObject } from './responses/PlaylistObject';
 import { PagingObject } from './responses/PagingObject';
+import { Track } from '../../../domain/Track';
 
 interface Args {
   apiUrl: string;
@@ -39,9 +40,17 @@ export class SpotifyProvider implements PlaylistProvider {
   }
 
   async getPlaylists(): Promise<Playlist[]> {
-    const { data } = await this.http.get<PagingObject<PlaylistObject>>(
-      'me/playlists'
-    );
-    return data.items.map((item) => this.mapper.toPlaylist(item));
+    const { data } = await this.http.get<PagingObject<PlaylistObject>>('me/playlists');
+    return (data.items || []).map((item) => this.mapper.toPlaylist(item));
+  }
+
+  async replaceTracks(id: string, tracks: Track[]): Promise<void> {
+    const uris = tracks.slice(0, 100).map((track) => track.id);
+    await this.http.put(`playlists/${id}/tracks`, { uris });
+  }
+
+  async addTracks(id: string, tracks: Track[]): Promise<void> {
+    const uris = tracks.slice(0, 100).map((track) => track.id);
+    await this.http.post(`playlists/${id}/tracks`, { uris });
   }
 }
