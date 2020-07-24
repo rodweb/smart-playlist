@@ -4,9 +4,8 @@ export class Track {
     readonly name: string,
     readonly artist: string,
     readonly album: string,
+    readonly playCount: number,
     readonly firstPlayed?: Date,
     readonly lastPlayed?: Date
-  ) // readonly playlists: string[],
-  // readonly liked: boolean
-  {}
+  ) {}
 }

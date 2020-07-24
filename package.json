@@ -18,9 +18,11 @@
     "migrate": "mikro-orm migration:up"
   },
   "dependencies": {
+    "async": "^3.2.0",
     "axios": "^0.19.2",
     "client-oauth2": "^4.3.1",
     "dotenv": "^8.2.0",
+    "express": "^4.17.1",
     "fastify": "^3.0.3",
     "mikro-orm": "^3.6.15",
     "pg": "^8.3.0",

@@ -14,6 +14,7 @@ const environmentVariables = {
   lastfm: {
     apiUrl: getString('LASTFM_API_URL'),
     apiKey: getString('LASTFM_API_KEY'),
+    user: getString('LASTFM_USER'),
   },
   spotify: {
     apiUrl: getString('SPOTIFY_API_URL'),

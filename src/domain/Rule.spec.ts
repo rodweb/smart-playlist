@@ -1,9 +1,6 @@
 import { Track } from './Track';
 import { mockInstanceOf } from '../Mock';
-
-abstract class Rule {
-  abstract isSatisfiedBy(track: Track): boolean;
-}
+import { Rule } from './Rule';
 
 class AlwaysSatisfiedRule implements Rule {
   isSatisfiedBy(): boolean {

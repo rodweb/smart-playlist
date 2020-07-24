@@ -5,10 +5,9 @@ import ClientOAuth2 from 'client-oauth2';
 
 import ormConfig from '../mikro-orm.config';
 import env from './environment';
-import { HistoryProviderFactory } from './HistoryProviderFactory';
-import { Track } from './infrastructure/entities/Track';
-import { Login } from './infrastructure/entities/Login';
-import { PlaylistProviderFactory } from './PlaylistProviderFactory';
+import { Login } from './entities/Login';
+import { SmartPlaylistService } from './SmartPlaylistService';
+import { LastfmAPI } from './LastfmAPI';
 
 let orm: MikroORM;
 
@@ -39,9 +38,7 @@ async function getToken(): Promise<ClientOAuth2.Token> {
   const repo = orm.em.getRepository<Login>('Login');
   const login = await repo.findOne({ uuid: { $ne: null } });
   if (login) {
-    const user = await spotifyOAuth
-      .createToken({ refresh_token: login.refreshToken })
-      .refresh();
+    const user = await spotifyOAuth.createToken({ refresh_token: login.refreshToken }).refresh();
     login.refreshToken = user.refreshToken;
     await repo.persistAndFlush(login);
     return user;
@@ -73,37 +70,13 @@ app.get('/auth/spotify/callback', async (req, reply) => {
   return reply.send();
 });
 
-app.get('/playlists', async (req, reply) => {
-  const { accessToken } = await getToken();
-  const provider = PlaylistProviderFactory.create({ env, accessToken });
-  const playlists = await provider.getPlaylists();
-  return reply.send(playlists);
-});
-
-const historyProvider = HistoryProviderFactory.create();
-async function saveTracks(orm: MikroORM, page: number): Promise<void> {
-  const tracks = await historyProvider.getRecentTracks({
-    pagination: { page: 1, limit: 200 },
-  });
-  console.log(`${new Date()}: Found ${tracks.length} tracks (${page}).`);
-  const repository = orm.em.getRepository<Track>('Track');
-  const entities = tracks.map((track) =>
-    repository.create({
-      name: track.name,
-      artist: track.artist,
-      album: track.album,
-      listenedAt: track.listenedAt.toISOString(),
-    })
-  );
-  await repository.persistAndFlush(entities);
-
-  if (tracks.length) return saveTracks(orm, page + 1);
-}
-
 (async () => {
   orm = await MikroORM.init(ormConfig);
-  await app.listen(env.api.port);
-  // await saveTracks(orm, 1);
+  // await new SmartPlaylistService(new LastfmAPI(env.lastfm.apiKey), orm).getRecentTracks(
+  //   env.lastfm.user
+  // );
+  // await app.listen(env.api.port);
+  process.exit(0);
 })().catch((err) => {
   console.error(err);
   process.exit(1);
