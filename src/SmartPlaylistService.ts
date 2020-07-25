@@ -1,6 +1,9 @@
 import { LastfmAPI } from './LastfmAPI';
 import { AbstractSqlConnection, MikroORM } from 'mikro-orm';
 import { PlayHistory } from './entities/PlayHistory';
+import { SpotifyAPI } from './SpotifyAPI';
+import { Track } from './entities/Track';
+import { RecentTracks } from './lastfm/RecentTracks';
 
 async function fetchAll<T>(
   iterator: IterableIterator<T>,
@@ -15,7 +18,11 @@ const toDate = (uts: string) => new Date(+uts * 1000);
 const fromDate = (date: Date) => date.getTime() / 1000;
 
 export class SmartPlaylistService {
-  constructor(private lastfmClient: LastfmAPI, private orm: MikroORM) {}
+  constructor(
+    private lastfmClient: LastfmAPI,
+    private spotifyClient: SpotifyAPI,
+    private orm: MikroORM
+  ) {}
 
   async getRecentTracks(user: string) {
     function* iterator(totalResults: number, limit: number) {
@@ -61,5 +68,27 @@ export class SmartPlaylistService {
     });
   }
 
-  async findTracks() {}
+  async findTracks() {
+    const recentRepo = this.orm.em.getRepository<PlayHistory>('PlayHistory');
+    const recentTracks = await recentRepo.findAll({
+      // where: {},
+      orderBy: { playedAt: 'ASC' },
+      limit: 1,
+    });
+    const recentTrack: RecentTracks['recenttracks']['track'][0] = recentTracks[0].data;
+    const query = `track:${recentTrack.name} artist:${recentTrack.artist.name} album:${recentTrack.album['#text']}`;
+    const response = await this.spotifyClient.search(query, ['track']);
+    const trackRepo = this.orm.em.getRepository<Track>('Track');
+    const tracks = response.tracks.items.map((track) => ({
+      name: track.name,
+      artist: track.artists[0].name,
+      album: track.album.name,
+      isrc: track.external_ids.isrc,
+      uri: track.uri,
+      id: track.id,
+    }));
+    // .map((track) => trackRepo.create(track));
+    tracks.forEach((track) => console.log(JSON.stringify(track)));
+    return tracks;
+  }
 }

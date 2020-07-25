@@ -66,8 +66,6 @@ describe('LastPlayedRule', () => {
 
 // last played in the last x [days, weeks, months, years]
 
-// album
-// artist
 // plays
 // playlist
 // first played

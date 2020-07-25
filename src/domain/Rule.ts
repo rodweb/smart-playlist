@@ -1,4 +1,5 @@
 import { Track } from './Track';
+import sub from 'date-fns/sub';
 
 export abstract class Rule {
   abstract isSatisfiedBy(track: Track): boolean;
@@ -59,5 +60,39 @@ export abstract class NumberRule extends Rule {
   }
   isSatisfiedBy(track: Track): boolean {
     return numberComparators[this.comparison](this.reference, this.getValue(track));
+  }
+}
+
+export enum DateComparison {
+  Last,
+}
+
+export enum Period {
+  Days = 'days',
+  Weeks = 'weeks',
+  Months = 'months',
+  Years = 'years',
+}
+
+export abstract class DateRule extends Rule {
+  getCurrentDate = () => new Date();
+
+  protected constructor(
+    private comparison: DateComparison,
+    private amount: number,
+    private period: Period,
+    private getValue: (track: Track) => Date | undefined
+  ) {
+    super();
+  }
+  isSatisfiedBy(track: Track): boolean {
+    const value = this.getValue(track);
+    if (!value) return false;
+
+    if (this.comparison === DateComparison.Last) {
+      const minimum = sub(this.getCurrentDate(), { [this.period]: this.amount });
+      return value >= minimum;
+    }
+    return false;
   }
 }

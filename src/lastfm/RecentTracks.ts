@@ -7,6 +7,7 @@ export interface Attr {
 }
 
 export interface Artist {
+  name: string;
   mbid: string;
   '#text': string;
 }

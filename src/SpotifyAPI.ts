@@ -1,5 +1,7 @@
 import axios, { AxiosInstance } from 'axios';
 import querystring from 'querystring';
+import { Track } from './entities/Track';
+import { SearchResult } from './spotify/SearchResult';
 
 const BASE_URL = 'https://api.spotify.com/v1/';
 
@@ -19,11 +21,16 @@ export class SpotifyAPI {
     });
   }
 
-  async search(query: string, types: MediaType[], market?: string, { limit, offset }: Pagination = {}) {
+  async search(
+    query: string,
+    types: MediaType[],
+    market?: string,
+    { limit, offset }: Pagination = {}
+  ): Promise<SearchResult> {
     const qs = querystring.stringify({
       q: query,
       type: types.join(','),
     });
-    const { data, status } = await this.client.get(`search?${qs}`);
+    return this.client.get(`search?${qs}`).then(({ data }) => data);
   }
 }

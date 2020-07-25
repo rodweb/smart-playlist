@@ -8,6 +8,7 @@ import env from './environment';
 import { Login } from './entities/Login';
 import { SmartPlaylistService } from './SmartPlaylistService';
 import { LastfmAPI } from './LastfmAPI';
+import { SpotifyAPI } from './SpotifyAPI';
 
 let orm: MikroORM;
 
@@ -76,6 +77,9 @@ app.get('/auth/spotify/callback', async (req, reply) => {
   //   env.lastfm.user
   // );
   // await app.listen(env.api.port);
+  const { accessToken } = await getToken();
+  const service = new SmartPlaylistService({} as any, new SpotifyAPI(accessToken), orm);
+  await service.findTracks();
   process.exit(0);
 })().catch((err) => {
   console.error(err);
