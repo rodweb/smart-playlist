@@ -1,5 +1,5 @@
 import * as process from 'process';
-import fastify from 'fastify';
+import express from 'express';
 import { MikroORM } from 'mikro-orm';
 import ClientOAuth2 from 'client-oauth2';
 
@@ -12,7 +12,7 @@ import { SpotifyAPI } from './SpotifyAPI';
 
 let orm: MikroORM;
 
-const app = fastify({ logger: true });
+const app = express();
 app.get('/', async () => {
   return { hello: 'ok' };
 });
@@ -76,11 +76,11 @@ app.get('/auth/spotify/callback', async (req, reply) => {
   // await new SmartPlaylistService(new LastfmAPI(env.lastfm.apiKey), orm).getRecentTracks(
   //   env.lastfm.user
   // );
-  // await app.listen(env.api.port);
-  const { accessToken } = await getToken();
-  const service = new SmartPlaylistService({} as any, new SpotifyAPI(accessToken), orm);
-  await service.findTracks();
-  process.exit(0);
+  app.listen(env.api.port);
+  // const { accessToken } = await getToken();
+  // const service = new SmartPlaylistService({} as any, new SpotifyAPI(accessToken), orm);
+  // await service.findTracks();
+  // process.exit(0);
 })().catch((err) => {
   console.error(err);
   process.exit(1);

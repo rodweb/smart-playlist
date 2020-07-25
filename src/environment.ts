@@ -4,12 +4,18 @@ dotenv.config();
 const getString = (key: string) => process.env[key] || '';
 const getNumber = (key: string) => Number(getString(key)) || 0;
 
-const environmentVariables = {
+const env = {
   api: {
     port: getNumber('API_PORT'),
   },
   db: {
     conn: getString('DB_CONN'),
+  },
+  mq: {
+    port: getNumber('MQ_PORT'),
+    queues: {
+      recentTrackFetcher: getString('MQ_RECENT_TRACK_FETCHER'),
+    },
   },
   lastfm: {
     apiUrl: getString('LASTFM_API_URL'),
@@ -25,5 +31,5 @@ const environmentVariables = {
     redirectUri: getString('SPOTIFY_REDIRECT_URI'),
   },
 };
-export type EnvironmentVariables = typeof environmentVariables;
-export default environmentVariables;
+export type EnvironmentVariables = typeof env;
+export default env;
