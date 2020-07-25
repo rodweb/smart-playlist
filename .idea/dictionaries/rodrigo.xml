@@ -2,6 +2,7 @@
   <dictionary name="rodrigo">
     <words>
       <w>dotenv</w>
+      <w>isrc</w>
       <w>lastfm</w>
       <w>mbid</w>
       <w>nowplaying</w>

@@ -30,6 +30,13 @@ const env = {
     authorizationUri: getString('SPOTIFY_AUTHORIZATION_URI'),
     redirectUri: getString('SPOTIFY_REDIRECT_URI'),
   },
+  musicbrainz: {
+    clientId: getString('MUSICBRAINZ_CLIENT_ID'),
+    clientSecret: getString('MUSICBRAINZ_CLIENT_SECRET'),
+    accessTokenUri: getString('MUSICBRAINZ_ACCESS_TOKEN_URI'),
+    authorizationUri: getString('MUSICBRAINZ_AUTHORIZATION_URI'),
+    redirectUrl: getString('MUSICBRAINZ_REDIRECT_URL'),
+  },
 };
 export type EnvironmentVariables = typeof env;
 export default env;

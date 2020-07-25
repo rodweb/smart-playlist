@@ -6,9 +6,7 @@ import ClientOAuth2 from 'client-oauth2';
 import ormConfig from '../mikro-orm.config';
 import env from './environment';
 import { Login } from './entities/Login';
-import { SmartPlaylistService } from './SmartPlaylistService';
-import { LastfmAPI } from './LastfmAPI';
-import { SpotifyAPI } from './SpotifyAPI';
+import { MusicBrainzApi } from 'musicbrainz-api';
 
 let orm: MikroORM;
 
@@ -35,6 +33,15 @@ const spotifyOAuth = new ClientOAuth2({
   // state: 'state',
 });
 
+const musicBrainzOAuth = new ClientOAuth2({
+  clientId: env.musicbrainz.clientId,
+  clientSecret: env.musicbrainz.clientSecret,
+  accessTokenUri: env.musicbrainz.accessTokenUri,
+  authorizationUri: env.musicbrainz.authorizationUri,
+  redirectUri: env.musicbrainz.redirectUrl,
+  scopes: ['profile', 'email', 'rating', 'tag', 'collection'],
+});
+
 async function getToken(): Promise<ClientOAuth2.Token> {
   const repo = orm.em.getRepository<Login>('Login');
   const login = await repo.findOne({ uuid: { $ne: null } });
@@ -48,13 +55,43 @@ async function getToken(): Promise<ClientOAuth2.Token> {
   // const accessToken = login.refreshToken
 }
 
-app.get('/auth/spotify', async (req, reply) => {
+app.get('/auth/musicbrainz', async (req, res) => {
+  const uri = musicBrainzOAuth.code.getUri();
+  return res.redirect(uri);
+});
+
+app.get('/auth/musicbrainz/callback', async (req, res) => {
+  try {
+    const user = await musicBrainzOAuth.code.getToken(req.originalUrl);
+    console.log(JSON.stringify(user.data, null, 2));
+    const mb = new MusicBrainzApi({
+      appName: 'smartplaylist',
+      appVersion: '0.1',
+      appContactInfo: 'rod.apd@gmail.com',
+    });
+    const repo = orm.em.getRepository<Login>('Login');
+    const existing = await repo.findOne({ email: 'rod.apd@gmail.com' });
+    if (existing) {
+      existing.musicbrainzToken = user.data;
+      await repo.flush();
+    } else {
+      const login = repo.create({
+        musicbrainzToken: user.data,
+      });
+      await repo.persistAndFlush(login);
+    }
+  } catch (err) {
+    throw err;
+  }
+  return res.sendStatus(200);
+});
+
+app.get('/auth/spotify', async (req, res) => {
   const uri = spotifyOAuth.code.getUri();
-  return reply.redirect(uri);
+  return res.redirect(uri);
 });
 
 app.get('/auth/spotify/callback', async (req, reply) => {
-  console.log(req.url);
   try {
     const user = await spotifyOAuth.code.getToken(req.url);
     const { refreshToken } = user;
@@ -63,6 +100,7 @@ app.get('/auth/spotify/callback', async (req, reply) => {
     const repo = orm.em.getRepository<Login>('Login');
     const login = repo.create({
       refreshToken,
+      spotifyToken: user.data,
     });
     await repo.persistAndFlush(login);
   } catch (err) {
