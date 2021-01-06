@@ -20,7 +20,7 @@
   "dependencies": {
     "@toplast/lastfm": "^0.1.2",
     "async": "^3.2.0",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "bullmq": "^1.9.0",
     "client-oauth2": "^4.3.1",
     "date-fns": "^2.15.0",
